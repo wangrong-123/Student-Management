@@ -1,0 +1,84 @@
+/*==============================================================*/
+/* DBMS name:      MySQL 5.0                                    */
+/* Created on:     2020/11/20 16:58:02                          */
+/*==============================================================*/
+
+
+drop table if exists Admin;
+
+drop table if exists Course;
+
+drop table if exists SC;
+
+drop table if exists Student;
+
+drop table if exists Teacher;
+
+/*==============================================================*/
+/* Table: Admin                                                 */
+/*==============================================================*/
+create table Admin
+(
+   Id                   int not null auto_increment,
+   userName             varchar(20),
+   pwd                  varchar(50),
+   adminName            varchar(20),
+   primary key (Id)
+);
+
+/*==============================================================*/
+/* Table: Course                                                */
+/*==============================================================*/
+create table Course
+(
+   cId                  int not null auto_increment,
+   cName                varchar(20),
+   tId                  int,
+   primary key (cId)
+);
+
+/*==============================================================*/
+/* Table: SC                                                    */
+/*==============================================================*/
+create table SC
+(
+   scId                 int not null,
+   stuId                int,
+   cId                  int,
+   score                decimal(5,2),
+   primary key (scId)
+);
+
+/*==============================================================*/
+/* Table: Student                                               */
+/*==============================================================*/
+create table Student
+(
+   stuId                int not null auto_increment,
+   stuName              varchar(20),
+   stuNo                varchar(20),
+   stuPwd               varchar(50),
+   primary key (stuId)
+);
+
+/*==============================================================*/
+/* Table: Teacher                                               */
+/*==============================================================*/
+create table Teacher
+(
+   tId                  int not null auto_increment,
+   tName                varchar(20),
+   tuserName            varchar(20),
+   pwd                  varchar(50),
+   primary key (tId)
+);
+
+alter table Course add constraint FK_Reference_3 foreign key (tId)
+      references Teacher (tId) on delete restrict on update restrict;
+
+alter table SC add constraint FK_Reference_1 foreign key (stuId)
+      references Student (stuId) on delete restrict on update restrict;
+
+alter table SC add constraint FK_Reference_2 foreign key (cId)
+      references Course (cId) on delete restrict on update restrict;
+
